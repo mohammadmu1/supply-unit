@@ -1,6 +1,6 @@
 package com.globitel.SupplyUnit.constant;
 
-public enum UserType {
+public enum Role {
     MANAGER,
     EMPLOYEE
 }
