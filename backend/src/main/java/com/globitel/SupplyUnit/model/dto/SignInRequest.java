@@ -1,4 +1,4 @@
-package com.globitel.SupplyUnit.model.dto.authentication;
+package com.globitel.SupplyUnit.model.dto;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class SignInRequest {
 
-    private String email;
+    private String userName;
 
     private String password;
 }

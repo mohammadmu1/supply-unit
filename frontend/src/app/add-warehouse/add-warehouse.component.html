@@ -1,0 +1,43 @@
+<button class="green-button" (click)="back()">Back</button>
+<div class="add-warehouse-container">
+  <h2>Add New Warehouse</h2>
+
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <form [formGroup]="warehouseForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Warehouse Name</label>
+      <input id="name" formControlName="name" type="text" required />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Warehouse Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+
+    <h3>Items in Warehouse</h3>
+    <div formArrayName="items">
+      <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-group">
+        <div class="form-group">
+          <label for="itemName">Item Name</label>
+          <input id="itemName" formControlName="name" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="itemDescription">Item Description</label>
+          <textarea id="itemDescription" formControlName="description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input id="quantity" formControlName="quantity" type="number" required />
+        </div>
+
+        <button type="button" (click)="removeItem(i)" class="remove-button">Remove Item</button>
+      </div>
+    </div>
+
+    <button type="button" (click)="addItem()" class="green-button">Add Item</button>
+    <button type="submit" class="green-button" [disabled]="warehouseForm.invalid">Save Warehouse</button>
+  </form>
+</div>

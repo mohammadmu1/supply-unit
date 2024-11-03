@@ -1,11 +1,11 @@
-package com.globitel.SupplyUnit.service.implemention;
+package com.globitel.SupplyUnit.service;
 
-import com.globitel.SupplyUnit.exception.UserNotFoundException;
 import com.globitel.SupplyUnit.model.entity.User;
-import com.globitel.SupplyUnit.model.mapper.UserMapper;
 import com.globitel.SupplyUnit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -20,5 +20,7 @@ public class UserService {
     }
 
 
-
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }

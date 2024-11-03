@@ -31,7 +31,7 @@ public class Item {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "warehouse_id", nullable = false)
-    private Warehouse warehouse;  // Link back to Warehouse
+    private Warehouse warehouse;
 
     // Getters and Setters
 }

@@ -1,0 +1,51 @@
+
+<div class="login-container">
+  <h2>Add User</h2>
+
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="signUp()">
+    <div class="input-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="signUpRequest.name" name="name" required />
+    </div>
+    <div class="input-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" [(ngModel)]="signUpRequest.username" name="username" required />
+    </div>
+    <div class="input-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="signUpRequest.password" name="password" required />
+    </div>
+    <div class="input-group">
+      <label for="role">Role:</label>
+      <select id="role" [(ngModel)]="signUpRequest.role" name="role" required>
+        <option value="" disabled selected>Select your role</option>
+        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+      </select>
+    </div>
+    <button
+      type="submit"
+      [disabled]="!signUpRequest.name || !signUpRequest.username || !signUpRequest.password || !signUpRequest.role"
+      [ngClass]="{
+        'filled-button':
+          signUpRequest.name &&
+          signUpRequest.username &&
+          signUpRequest.password &&
+          signUpRequest.role,
+        'uncolored-button': !signUpRequest.role
+      }"
+    >
+      Add User
+    </button>
+    <button (click)="logout()" class="logout-button">Logout</button>
+
+  </form>
+</div>

@@ -1,0 +1,17 @@
+.warehouse-items-container {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.green-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

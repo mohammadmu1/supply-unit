@@ -1,5 +1,6 @@
 package com.globitel.SupplyUnit.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class Warehouse {
     @Column
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;  // User (Manager)
@@ -35,6 +37,11 @@ public class Warehouse {
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdDateTime = LocalDateTime.now();
+    }
 
 
 }

@@ -1,0 +1,71 @@
+.supply-documents-container {
+  padding: 20px;
+}
+
+.green-button {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.green-button:hover {
+  background-color: #218838;
+}
+
+.red-button {
+  background-color: #dc3545;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.red-button:hover {
+  background-color: #c82333;
+}
+
+.red-button:disabled,
+.green-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  margin-top: 15px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th input[type="checkbox"],
+td input[type="checkbox"] {
+  cursor: pointer;
+  transform: scale(1.2);
+  margin-right: 10px;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+td button.green-button {
+  margin: 0;
+}
+

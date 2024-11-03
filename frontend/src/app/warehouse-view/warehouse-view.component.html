@@ -1,0 +1,27 @@
+<div class="warehouse-container">
+    <button class="green-button" >Export to Excel</button>
+    <button class="green-button" (click)="addWarehouse()">Add Warehouse</button>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Warehouse Name</th>
+      <th>Description</th>
+      <th>Created Date and Time</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let warehouse of warehouses">
+      <td>{{ warehouse.name }}</td>
+      <td>{{ warehouse.description }}</td>
+      <td>{{ warehouse.createdDateTime }}</td>
+      <td>
+        <button class="green-button" (click)="viewItems(warehouse.name)">View Items</button>
+        <button class="green-button" (click)="deleteWarehouse(warehouse.name)" >Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

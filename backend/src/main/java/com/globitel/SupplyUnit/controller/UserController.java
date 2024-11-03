@@ -1,13 +1,15 @@
 package com.globitel.SupplyUnit.controller;
 
-import com.globitel.SupplyUnit.model.dto.UserDto;
+import com.globitel.SupplyUnit.model.entity.User;
+import com.globitel.SupplyUnit.service.JwtService;
 import com.globitel.SupplyUnit.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     final UserService userService;
@@ -16,21 +18,25 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findById(@PathVariable Long id) {
-        UserDto userDto = userService.findUserById(id);
-        return ResponseEntity.ok(userDto);
-    }
 
-    @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        UserDto createdUser = userService.createUser(userDto);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-    }
 
+
+
+    @Autowired
+    private JwtService jwtService;
+
+    @GetMapping("/username")
+    public String getUserNameFromToken(@RequestHeader("Authorization") String authorizationHeader) {
+
+        String token = authorizationHeader.replace("Bearer ", "");
+
+
+        String username = jwtService.getUserName(token);
+
+        return "Username: " + username;
+    }
     @GetMapping("")
-    public String findById() {
-
-        return "ResponseEntity.ok(userDto)";
+    List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }

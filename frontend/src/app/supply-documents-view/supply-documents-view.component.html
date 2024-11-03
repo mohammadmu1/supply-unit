@@ -1,0 +1,36 @@
+<div class="supply-documents-container">
+  <button class="green-button" >Add Supply Document</button>
+
+  <button
+    class="red-button"
+    [disabled]="!isAnyDocumentSelected()"
+    [ngClass]="{'no-selection': !isAnyDocumentSelected()}"
+    >
+    Delete Selected Supply Documents
+  </button>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Supply Document Name</th>
+      <th>Subject</th>
+      <th>Created Date and Time</th>
+      <th>Select Document for Delete</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let doc of supplyDocuments">
+      <td>{{ doc.name }}</td>
+      <td>{{ doc.subject }}</td>
+      <td>{{ doc.createdDateTime }}</td>
+      <td>
+        <input type="checkbox" [(ngModel)]="doc.selected" (change)="checkIfAnySelected()" />
+      </td>
+      <td>
+        <button class="green-button" (click)="viewDocumentDetails(doc.id)">View Details</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

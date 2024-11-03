@@ -19,26 +19,31 @@ public class SupplyDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column()
     private String name;
 
-    @Column(nullable = false)
+    @Column()
     private String subject;
 
     @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
-    private User createdBy;  // Link to the employee who created the document
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     @Column(nullable = false)
     private LocalDateTime createdDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "warehouse_id", nullable = false)
-    private Warehouse warehouse;  // Warehouse related to the supply document
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false)
-    private Item item;  // Item being supplied in this document
+    @JoinColumn(name = "item_id")
+    private Item item;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdDateTime = LocalDateTime.now();
+    }
 
 
 }
