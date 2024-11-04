@@ -21,7 +21,7 @@ public class SupplyDocumentController {
 
     @GetMapping("")
     public ResponseEntity<List<SupplyDocument>> getSupplyDocumentByUsername(@RequestHeader("Authorization")
-                                                                   String authorizationHeader) {
+                                                                            String authorizationHeader) {
         List<SupplyDocument> supplyDocuments = supplyDocumentService.getSupplyDocumentsByUsername(authorizationHeader);
         return ResponseEntity.ok(supplyDocuments);
     }
@@ -36,24 +36,12 @@ public class SupplyDocumentController {
 
     @PostMapping("")
     public ResponseEntity<Void> addSupplyDocument(@RequestBody SupplyDocumentDto supplyDocumentDto,
-                                                    @RequestHeader("Authorization")
-                                                            String authorizationHeader) {
+                                                  @RequestHeader("Authorization")
+                                                  String authorizationHeader) {
         supplyDocumentService.createSupplyDocument(authorizationHeader,supplyDocumentDto);
         return ResponseEntity.ok().build();
     }
 
-//    @PostMapping("/add")
-//    public ResponseEntity<SupplyDocument> addSupplyDocument(
-//            @RequestHeader("Authorization") String authorizationHeader,
-//            @RequestBody SupplyDocument document) {
-//
-//        SupplyDocument createdSupplyDocument = supplyDocumentService.createSupplyDocument(document, authorizationHeader);
-//
-//        return ResponseEntity.ok(createdSupplyDocument);
-//
-//
-//    }
+
 
 }
-
-

@@ -25,6 +25,7 @@ public class WarehouseService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final WarehouseRepository warehouseRepository;
+    private String username;
 
 
     public List<Warehouse> getWarehousesByUsername(String authorizationHeader) {
@@ -38,7 +39,6 @@ public class WarehouseService {
     @Transactional
     public Warehouse addWarehouse(Warehouse warehouse, String authorizationHeader) {
 
-//        String token = authorizationHeader.replace("Bearer ", "");
         String username = jwtService.getUserName(authorizationHeader);
 
         User manager = userRepository.findByUsername(username)

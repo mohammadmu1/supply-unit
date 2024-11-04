@@ -22,7 +22,17 @@ public interface SupplyDocumentRepository extends JpaRepository <SupplyDocument,
     void deleteSelectedSupplyDocuments(@Param("docIds") String docIds);
 
 
-
-
-
+    @Modifying
+    @Transactional
+    @Query(value = "CALL CreateSupplyDocument(:username, :warehouseId, :itemId, :name, :subject)", nativeQuery = true)
+    void createSupplyDocument(
+            @Param("username") String username,
+            @Param("warehouseId") Long warehouseId,
+            @Param("itemId") Long itemId,
+            @Param("name") String name,
+            @Param("subject") String subject
+    );
 }
+
+
+
