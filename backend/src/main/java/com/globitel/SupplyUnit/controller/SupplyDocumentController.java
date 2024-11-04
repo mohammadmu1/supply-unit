@@ -1,5 +1,6 @@
 package com.globitel.SupplyUnit.controller;
 
+import com.globitel.SupplyUnit.model.dto.SupplyDocumentDto;
 import com.globitel.SupplyUnit.model.entity.SupplyDocument;
 import com.globitel.SupplyUnit.service.JwtService;
 import com.globitel.SupplyUnit.service.SupplyDocumentService;
@@ -16,16 +17,12 @@ import java.util.List;
 public class SupplyDocumentController {
 
     private final SupplyDocumentService supplyDocumentService;
-    private JwtService jwtService;
 
 
     @GetMapping("")
     public ResponseEntity<List<SupplyDocument>> getSupplyDocumentByUsername(@RequestHeader("Authorization")
                                                                    String authorizationHeader) {
-
-        String token = authorizationHeader.replace("Bearer ", "");
-        String username = jwtService.getUserName(token);
-        List<SupplyDocument> supplyDocuments = supplyDocumentService.getWarehousesByUsername(username);
+        List<SupplyDocument> supplyDocuments = supplyDocumentService.getSupplyDocumentsByUsername(authorizationHeader);
         return ResponseEntity.ok(supplyDocuments);
     }
 
@@ -36,4 +33,27 @@ public class SupplyDocumentController {
         return ResponseEntity.noContent().build();
     }
 
+
+    @PostMapping("")
+    public ResponseEntity<Void> addSupplyDocument(@RequestBody SupplyDocumentDto supplyDocumentDto,
+                                                    @RequestHeader("Authorization")
+                                                            String authorizationHeader) {
+        supplyDocumentService.createSupplyDocument(authorizationHeader,supplyDocumentDto);
+        return ResponseEntity.ok().build();
+    }
+
+//    @PostMapping("/add")
+//    public ResponseEntity<SupplyDocument> addSupplyDocument(
+//            @RequestHeader("Authorization") String authorizationHeader,
+//            @RequestBody SupplyDocument document) {
+//
+//        SupplyDocument createdSupplyDocument = supplyDocumentService.createSupplyDocument(document, authorizationHeader);
+//
+//        return ResponseEntity.ok(createdSupplyDocument);
+//
+//
+//    }
+
 }
+
+

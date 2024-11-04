@@ -2,14 +2,15 @@ package com.globitel.SupplyUnit.controller;
 
 import com.globitel.SupplyUnit.model.entity.Item;
 import com.globitel.SupplyUnit.model.entity.Warehouse;
+import com.globitel.SupplyUnit.repository.WarehouseRepository;
 import com.globitel.SupplyUnit.service.JwtService;
 import com.globitel.SupplyUnit.service.WarehouseService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @AllArgsConstructor
@@ -19,7 +20,7 @@ import java.util.List;
 public class WarehouseController {
 
     private final WarehouseService warehouseService;
-    private JwtService jwtService;
+    private final WarehouseRepository warehouseRepository;
 
 
 
@@ -27,9 +28,7 @@ public class WarehouseController {
     public ResponseEntity<List<Warehouse>> getWarehousesByUsername(@RequestHeader("Authorization")
                                                                        String authorizationHeader) {
 
-        String token = authorizationHeader.replace("Bearer ", "");
-        String username = jwtService.getUserName(token);
-        List<Warehouse> warehouses = warehouseService.getWarehousesByUsername(username);
+        List<Warehouse> warehouses = warehouseService.getWarehousesByUsername(authorizationHeader);
         return ResponseEntity.ok(warehouses);
     }
 
@@ -49,10 +48,16 @@ public class WarehouseController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{warehouseName}/items")
-    public ResponseEntity<List<Item>> getItemsByWarehouseName(@PathVariable String warehouseName) {
-        List<Item> items = warehouseService.getItemsByWarehouseName(warehouseName);
+    @PostMapping("/items") // todo Use SP
+    public ResponseEntity<List<Item>> getItemsByWarehouseName(@RequestBody Map<String, String> request) {
+        String warehouseName = request.get("warehouseName");
+        List<Item> items = warehouseRepository.getWarehouseByName(warehouseName).getItems();
         return ResponseEntity.ok(items);
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Warehouse>> getAllWarehousesWithItems() {
+        List<Warehouse> warehouses = warehouseService.getAllWarehousesWithItems();
+        return ResponseEntity.ok(warehouses);
     }
 }
 

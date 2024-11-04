@@ -1,5 +1,7 @@
 package com.globitel.SupplyUnit.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.globitel.SupplyUnit.model.entity.Item;
 import com.globitel.SupplyUnit.model.entity.User;
 import com.globitel.SupplyUnit.model.entity.Warehouse;
@@ -10,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,7 +27,8 @@ public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
 
 
-    public List<Warehouse> getWarehousesByUsername(String username) {
+    public List<Warehouse> getWarehousesByUsername(String authorizationHeader) {
+        String username= jwtService.getUserName(authorizationHeader);
         return warehouseRepository.findWarehousesByUsername(username);
     }
     public void deleteWarehouseByName(String name) {
@@ -34,8 +38,8 @@ public class WarehouseService {
     @Transactional
     public Warehouse addWarehouse(Warehouse warehouse, String authorizationHeader) {
 
-        String token = authorizationHeader.replace("Bearer ", "");
-        String username = jwtService.getUserName(token);
+//        String token = authorizationHeader.replace("Bearer ", "");
+        String username = jwtService.getUserName(authorizationHeader);
 
         User manager = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
@@ -47,14 +51,15 @@ public class WarehouseService {
             warehouse.getItems().forEach(item -> item.setWarehouse(warehouse));
         }
 
-        return warehouseRepository.save(warehouse);
+        return warehouseRepository.save(warehouse); //todo SP and avoid N+1
     }
 
     public List<Item> getItemsByWarehouseName(String warehouseName) {
         return warehouseRepository.findItemsByWarehouseName(warehouseName);
     }
-//    String token = authorizationHeader.replace("Bearer ", "");
-//
-//
-//    String username = jwtService.getUserName(token);
+
+    public List<Warehouse> getAllWarehousesWithItems() {
+        return warehouseRepository.getAllWarehousesWithItems();
+    }
+
 }

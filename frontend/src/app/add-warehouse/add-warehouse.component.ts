@@ -68,24 +68,16 @@ export class AddWarehouseComponent implements OnInit {
 
       const duplicate = this.warehouses.some((wh) => wh.name === warehouseData.name);
       if (duplicate) {
-        this.errorMessage = 'This warehouse name already exists. Please choose another name.';
-        this.warehouseForm.reset();
-        this.items.clear();
-        setTimeout(() => {
-          this.errorMessage = '';
-          this.warehouseForm.reset();
-          this.items.clear();
-        }, 1500);
+        this.showErrorMessage('This warehouse name already exists. Please choose another name.');
       } else {
-
         this.warehouseService.addWarehouse(warehouseData.name, warehouseData.description, warehouseData.items).subscribe(
           (response) => {
             console.log('Warehouse added successfully:', response);
             console.log(warehouseData.items);
-            this.warehouseForm.reset();
-            this.items.clear();
+            this.resetForm();
           },
           (error) => {
+            this.showErrorMessage('This warehouse name already exists with another Manager. Please choose another name.');
             console.error('Error adding warehouse:', error);
           }
         );
@@ -95,6 +87,20 @@ export class AddWarehouseComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
+
+  private resetForm(): void {
+    this.warehouseForm.reset();
+    this.items.clear();
+  }
+
+  private showErrorMessage(message: string): void {
+    this.errorMessage = message;
+    setTimeout(() => {
+      this.errorMessage = '';
+      this.resetForm();
+    }, 2000);
+  }
+
 
 
   back(): void {

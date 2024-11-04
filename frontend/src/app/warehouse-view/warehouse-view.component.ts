@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import * as XLSX from 'xlsx'; // Import the xlsx library
 import { Router } from '@angular/router';
-import {Warehouse, WarehouseService} from "../service/warehouse-service.service";
+import { Warehouse, WarehouseService } from "../service/warehouse-service.service";
 
 @Component({
   selector: 'app-warehouse-view',
@@ -14,26 +14,22 @@ import {Warehouse, WarehouseService} from "../service/warehouse-service.service"
 export class WarehouseViewComponent implements OnInit {
 
   warehouses: Warehouse[] = [];
+
   ngOnInit(): void {
     this.loadWarehouses();
   }
 
   constructor(
-    private warehouseService:WarehouseService,
-    private router:Router
-  ) {
-  }
+    private warehouseService: WarehouseService,
+    private router: Router
+  ) {}
 
   loadWarehouses(): void {
     this.warehouseService.getWarehouses().subscribe(
-      data => {this.warehouses = data;
-
-      },
+      data => { this.warehouses = data; },
       error => console.error('Error fetching warehouses', error)
     );
   }
-
-
 
   deleteWarehouse(name: string): void {
     this.warehouseService.deleteWarehouse(name).subscribe(
@@ -45,7 +41,6 @@ export class WarehouseViewComponent implements OnInit {
     );
   }
 
-
   addWarehouse() {
     this.warehouseService.warehouses = this.warehouses;
     this.router.navigate(['warehouse/add']);
@@ -55,4 +50,34 @@ export class WarehouseViewComponent implements OnInit {
     this.router.navigate(['warehouse', warehouseName, 'items']);
   }
 
+  exportToExcel(): void {
+    const data: any[] = [];
+
+    this.warehouses.forEach(warehouse => {
+      data.push({
+        'Warehouse Name': warehouse.name,
+        'Description': warehouse.description,
+        'Created Date': warehouse.createdDateTime,
+        'Item Name': '',  // Blank row for warehouse-level data
+        'Item Description': '',
+        'Quantity': ''
+      });
+
+      warehouse.items.forEach(item => {
+        data.push({
+          'Warehouse Name': '',
+          'Description': '',
+          'Created Date': '',
+          'Item Name': item.name,
+          'Item Description': item.description,
+          'Quantity': item.quantity
+        });
+      });
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Warehouses': worksheet }, SheetNames: ['Warehouses'] };
+
+    XLSX.writeFile(workbook, 'Warehouses.xlsx');
+  }
 }

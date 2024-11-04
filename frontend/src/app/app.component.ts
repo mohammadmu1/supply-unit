@@ -1,13 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
+import { AuthenticationService } from './service/authentication.service';
+import {HeaderComponent} from "./header/header.component";
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    RouterOutlet
+  ],
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'frontend';
+
+  constructor(private authService: AuthenticationService, private router: Router) {}
+
+  get isLoginPage(): boolean {
+    return this.router.url === '/login';
+  }
+
+  logout() {
+    this.authService.clearToken();
+    window.location.reload();
+  }
 }

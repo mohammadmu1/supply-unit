@@ -29,9 +29,8 @@ public class Item {
     private int quantity;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
 
-    // Getters and Setters
 }

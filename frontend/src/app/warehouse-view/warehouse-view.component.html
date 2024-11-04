@@ -1,6 +1,6 @@
 <div class="warehouse-container">
-    <button class="green-button" >Export to Excel</button>
-    <button class="green-button" (click)="addWarehouse()">Add Warehouse</button>
+  <button class="green-button" (click)="exportToExcel()">Export to Excel</button>
+  <button class="green-button" (click)="addWarehouse()">Add Warehouse</button>
 
   <table class="table table-striped">
     <thead>
@@ -18,10 +18,9 @@
       <td>{{ warehouse.createdDateTime }}</td>
       <td>
         <button class="green-button" (click)="viewItems(warehouse.name)">View Items</button>
-        <button class="green-button" (click)="deleteWarehouse(warehouse.name)" >Delete</button>
+        <button class="red-button" (click)="deleteWarehouse(warehouse.name)">Delete</button>
       </td>
     </tr>
     </tbody>
   </table>
-
 </div>

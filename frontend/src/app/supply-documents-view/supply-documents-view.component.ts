@@ -33,9 +33,23 @@ export class SupplyDocumentsViewComponent implements OnInit {
   }
 
   addSupplyDocument(): void {
-    this.router.navigate(['/supply-documents/add']);
+    this.router.navigate(['/supplyDocument/add']);
   }
+  deleteSelectedDocuments(): void {
+    const selectedDocIds = this.supplyDocuments
+      .filter(doc => doc.selected)
+      .map(doc => doc.id);
 
+    this.supplyDocumentService.deleteSelectedSupplyDocuments(selectedDocIds).subscribe({
+      next: () => {
+        console.log('Documents deleted successfully');
+        this.loadSupplyDocuments(); // Refresh the list
+      },
+      error: (error) => {
+        console.error('Error deleting documents:', error);
+      }
+    });
+  }
 
 
   viewDocumentDetails(documentId: number): void {

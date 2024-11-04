@@ -10,6 +10,8 @@ export interface SupplyDocument {
   createdBy: string;
   createdDateTime: string;
   selected: boolean;
+  warehouseId: number,
+  itemId: number
 }
 
 @Injectable({
@@ -32,19 +34,20 @@ export class SupplyDocumentService {
     );
   }
 
-  // addSupplyDocument(name: string, subject: string, createdBy: string): Observable<SupplyDocument> {
-  //   const token = localStorage.getItem('jwtToken');
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${token}`,
-  //     'Content-Type': 'application/json'
-  //   });
-  //
-  //   return this.http.post<SupplyDocument>(
-  //     `${this.baseUrl}`,
-  //     { name, subject, createdBy },
-  //     { headers }
-  //   );
-  // }
+  addSupplyDocument(name: string, subject: string,  warehouseId: number, itemId: number): Observable<SupplyDocument> {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<SupplyDocument>(
+      `${this.baseUrl}`,
+      { name, subject,  warehouseId, itemId },
+      { headers }
+    );
+  }
+
 
   deleteSelectedSupplyDocuments(documentIds: number[]): Observable<void> {
     const token = localStorage.getItem('jwtToken');
@@ -53,11 +56,9 @@ export class SupplyDocumentService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<void>(`${this.baseUrl}/deleteSelected`,
-      { documentIds },
-      { headers }).pipe(
-      map((response) => response)
-    );
+
+    return this.http.post<void>(`${this.baseUrl}/deleteSelected`, documentIds, { headers });
   }
+
 
 }

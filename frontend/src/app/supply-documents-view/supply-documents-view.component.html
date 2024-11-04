@@ -1,10 +1,12 @@
 <div class="supply-documents-container">
-  <button class="green-button" >Add Supply Document</button>
+  <button class="green-button"
+          (click)="addSupplyDocument()">Add Supply Document</button>
 
   <button
     class="red-button"
     [disabled]="!isAnyDocumentSelected()"
     [ngClass]="{'no-selection': !isAnyDocumentSelected()}"
+    (click)="deleteSelectedDocuments()"
     >
     Delete Selected Supply Documents
   </button>
@@ -16,7 +18,6 @@
       <th>Subject</th>
       <th>Created Date and Time</th>
       <th>Select Document for Delete</th>
-      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -27,9 +28,7 @@
       <td>
         <input type="checkbox" [(ngModel)]="doc.selected" (change)="checkIfAnySelected()" />
       </td>
-      <td>
-        <button class="green-button" (click)="viewDocumentDetails(doc.id)">View Details</button>
-      </td>
+
     </tr>
     </tbody>
   </table>

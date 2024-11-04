@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 export interface Item {
+  id: number;
   name: string;
   description: string;
   quantity: number;
@@ -24,7 +25,8 @@ export interface Warehouse {
 export class WarehouseService {
   private baseUrl = 'http://localhost:8080/api/v1/warehouses';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   warehouses: Warehouse[] = [];
 
@@ -35,7 +37,23 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<Warehouse[]>(`${this.baseUrl}`, { headers }).pipe(
+    return this.http.get<Warehouse[]>(`${this.baseUrl}`, {headers}).pipe(
+      map((response) => {
+        this.warehouses = response;
+        console.log("Service response:", this.warehouses);
+        return response;
+      })
+    );
+  }
+
+  getAllWarehousesWithItems(): Observable<Warehouse[]> {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<Warehouse[]>(`${this.baseUrl}/all`, {headers}).pipe(
       map((response) => {
         this.warehouses = response;
         console.log("Service response:", this.warehouses);
@@ -53,8 +71,8 @@ export class WarehouseService {
 
     return this.http.post<Warehouse>(
       `${this.baseUrl}`,
-      { name, description, items },
-      { headers }
+      {name, description, items},
+      {headers}
     ).pipe(
       map((response) => response)
     );
@@ -67,7 +85,7 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.delete<any>(`${this.baseUrl}/${name}`, { headers }).pipe(
+    return this.http.delete<any>(`${this.baseUrl}/${name}`, {headers}).pipe(
       map((response) => response)
     );
   }
@@ -79,8 +97,10 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<Warehouse>(`${this.baseUrl}/${warehouseName}/items`, { headers }).pipe(
-      map((warehouse) => warehouse.items)
+    return this.http.post<Item[]>(`${this.baseUrl}/items`, { warehouseName }, { headers }).pipe(
+      map((response) => response)
     );
   }
+
+
 }
