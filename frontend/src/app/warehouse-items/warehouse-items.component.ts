@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { WarehouseService, Warehouse, Item } from '../service/warehouse-service.service';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {Item, WarehouseService} from '../service/warehouse-service.service';
+import {AuthenticationService} from "../service/authentication.service";
 
 @Component({
   selector: 'app-warehouse-items',
@@ -17,10 +18,12 @@ export class WarehouseItemsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private warehouseService: WarehouseService
+    private warehouseService: WarehouseService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+
     this.warehouseName = this.route.snapshot.paramMap.get('warehouseName') || '';
     this.loadItems();
   }

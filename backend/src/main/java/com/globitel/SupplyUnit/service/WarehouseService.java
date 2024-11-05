@@ -9,6 +9,7 @@ import com.globitel.SupplyUnit.repository.UserRepository;
 import com.globitel.SupplyUnit.repository.WarehouseRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,18 +28,26 @@ public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
 
 
+
     public List<Warehouse> getWarehousesByUsername(String authorizationHeader) {
         String username= jwtService.getUserName(authorizationHeader);
         return warehouseRepository.findWarehousesByUsername(username);
     }
     public void deleteWarehouseByName(String name) {
-        warehouseRepository.deleteWarehouseByName(name);
+        try {
+            warehouseRepository.deleteWarehouseByName(name);
+        } catch (DataIntegrityViolationException e) {
+            System.err.println("Cannot delete the warehouse '" + name + "' because it has related records in other tables. Please delete or update dependent records first.");
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred while deleting the warehouse: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
+
 
     @Transactional
     public Warehouse addWarehouse(Warehouse warehouse, String authorizationHeader) {
 
-//        String token = authorizationHeader.replace("Bearer ", "");
         String username = jwtService.getUserName(authorizationHeader);
 
         User manager = userRepository.findByUsername(username)

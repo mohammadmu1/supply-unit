@@ -12,6 +12,11 @@ export interface SupplyDocument {
   selected: boolean;
   warehouseId: number,
   itemId: number
+  status: string
+  employeeName:string;
+  warehouseName:string;
+  itemName:string;
+
 }
 
 @Injectable({
@@ -60,5 +65,26 @@ export class SupplyDocumentService {
     return this.http.post<void>(`${this.baseUrl}/deleteSelected`, documentIds, { headers });
   }
 
+  getManagerSupplyDocuments(): Observable<SupplyDocument[]> {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<SupplyDocument[]>(`${this.baseUrl}/manager`, { headers }).pipe(
+      map((response) => response)
+    );
+  }
+
+  updateDocumentStatus(updatePayload: { id: number, status: string }): Observable<void> {
+    const token = localStorage.getItem('jwtToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put<void>(`${this.baseUrl}/updateStatus`, updatePayload, { headers });
+  }
 
 }

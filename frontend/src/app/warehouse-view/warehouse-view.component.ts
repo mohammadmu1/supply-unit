@@ -46,6 +46,11 @@ export class WarehouseViewComponent implements OnInit {
     this.router.navigate(['warehouse/add']);
   }
 
+  docs() {
+    this.warehouseService.warehouses = this.warehouses;
+    this.router.navigate(['supplyDocument/manager']);
+  }
+
   viewItems(warehouseName: string): void {
     this.router.navigate(['warehouse', warehouseName, 'items']);
   }

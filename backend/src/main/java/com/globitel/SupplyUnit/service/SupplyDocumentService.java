@@ -1,27 +1,29 @@
 package com.globitel.SupplyUnit.service;
 
-import com.globitel.SupplyUnit.exception.ResourceNotFoundException;
+import com.globitel.SupplyUnit.constant.DocumentStatus;
 import com.globitel.SupplyUnit.model.dto.SupplyDocumentDto;
-import com.globitel.SupplyUnit.model.entity.Item;
 import com.globitel.SupplyUnit.model.entity.SupplyDocument;
 import com.globitel.SupplyUnit.model.entity.User;
-import com.globitel.SupplyUnit.model.entity.Warehouse;
 import com.globitel.SupplyUnit.repository.ItemRepository;
 import com.globitel.SupplyUnit.repository.SupplyDocumentRepository;
 import com.globitel.SupplyUnit.repository.UserRepository;
 import com.globitel.SupplyUnit.repository.WarehouseRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class SupplyDocumentService {
-
 
 
     private final SupplyDocumentRepository getSupplyDocumentRepository;
@@ -33,14 +35,21 @@ public class SupplyDocumentService {
     private final JwtService jwtService;
 
 
+
+
     public List<SupplyDocument> getSupplyDocumentsByUsername(String authorizationHeader) {
 
         String username = jwtService.getUserName(authorizationHeader);
 
         User employee = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
-
-        return getSupplyDocumentRepository.findSupplyDocumentByUsername(username);
+        try {
+            return getSupplyDocumentRepository.findSupplyDocumentByUsername(username);
+        } catch (Exception e) {
+            System.err.println("Error occurred while creating SupplyDocument: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to create SupplyDocument due to an error", e);
+        }
     }
 
     @Transactional
@@ -50,34 +59,58 @@ public class SupplyDocumentService {
                 .collect(Collectors.joining(","));
         getSupplyDocumentRepository.deleteSelectedSupplyDocuments(docIdsString);
     }
-    @Transactional  //todo find way to use SP to make this transaction by one query
+
+
+    @Transactional
     public void createSupplyDocument(String authorizationHeader, SupplyDocumentDto supplyDocumentDto) {
         String username = jwtService.getUserName(authorizationHeader);
 
-        User employee = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
-
-        Warehouse warehouse = warehouseRepository.findById(supplyDocumentDto.getWarehouseId())
-                .orElseThrow(() -> new ResourceNotFoundException("Warehouse not found with ID: " + supplyDocumentDto.getWarehouseId()));
-
-        Item item = itemRepository.findById(supplyDocumentDto.getItemId())
-                .orElseThrow(() -> new ResourceNotFoundException("Item not found with ID: " + supplyDocumentDto.getItemId()));
-
-        SupplyDocument supplyDocument = SupplyDocument.builder()
-                .createdBy(employee)
-                .name(supplyDocumentDto.getName())
-                .subject(supplyDocumentDto.getSubject())
-                .warehouse(warehouse)
-                .item(item)
-                .createdDateTime(LocalDateTime.now())
-                .build();
-
-        supplyDocumentRepository.save(supplyDocument);
+        try {
+            supplyDocumentRepository.createSupplyDocument(
+                    username,
+                    supplyDocumentDto.getWarehouseId(),
+                    supplyDocumentDto.getItemId(),
+                    supplyDocumentDto.getName(),
+                    supplyDocumentDto.getSubject()
+            );
+        } catch (Exception e) {
+            System.err.println("Error occurred while creating SupplyDocument: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Failed to create SupplyDocument due to an error", e);
+        }
     }
 
 
+    public List<SupplyDocumentDto> findSupplyDocumentsByManagerUsername(String authorizationHeader) {
+        String managerName = jwtService.getUserName(authorizationHeader);
 
+        User employee = userRepository.findByUsername(managerName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + managerName));
+        List<SupplyDocument> docs = supplyDocumentRepository.findSupplyDocumentsByManagerUsername(managerName);
 
+        List<SupplyDocumentDto> dtoList = docs.stream()
+                .filter(doc -> doc.getStatus() == DocumentStatus.Pending)
+                .map(doc -> SupplyDocumentDto.builder()
+                        .name(doc.getName())
+                        .subject(doc.getSubject())
+                        .id(doc.getId())
+                        .createdDateTime(doc.getCreatedDateTime())
+                        .itemName(doc.getItem().getName())
+                        .warehouseName(doc.getWarehouse().getName())
+                        .employeeName(doc.getCreatedBy().getFullName())
+                        .build())
+                .collect(Collectors.toList());
 
+        return dtoList;
+    }
+
+    @Transactional
+    public void updateDocumentStatus(Long documentId, DocumentStatus status) {
+        supplyDocumentRepository.updateDocumentStatus(documentId, status.name());
+    }
 
 }
+
+
+
+
