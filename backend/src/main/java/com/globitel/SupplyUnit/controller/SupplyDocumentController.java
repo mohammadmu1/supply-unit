@@ -1,14 +1,18 @@
 package com.globitel.SupplyUnit.controller;
 
+import com.globitel.SupplyUnit.constant.DocumentStatus;
 import com.globitel.SupplyUnit.model.dto.SupplyDocumentDto;
 import com.globitel.SupplyUnit.model.entity.SupplyDocument;
 import com.globitel.SupplyUnit.service.JwtService;
 import com.globitel.SupplyUnit.service.SupplyDocumentService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -44,4 +48,24 @@ public class SupplyDocumentController {
 
 
 
+    @GetMapping("/manager")
+    public ResponseEntity<List<SupplyDocumentDto>> getSupplyDocuments(@RequestHeader("Authorization")
+                                                                          String authorizationHeader) {
+
+
+
+        List<SupplyDocumentDto> dtoList =supplyDocumentService.findSupplyDocumentsByManagerUsername(authorizationHeader);
+
+        return ResponseEntity.ok(dtoList);
+    }
+
+    @PutMapping("/updateStatus")
+    public ResponseEntity<Void> updateDocumentStatus(@RequestBody Map<String, Object> requestBody) {
+        Long id = Long.valueOf(requestBody.get("id").toString());
+        DocumentStatus status = DocumentStatus.valueOf(requestBody.get("status").toString());
+
+        supplyDocumentService.updateDocumentStatus(id, status);
+        return ResponseEntity.ok().build();
+    }
 }
+

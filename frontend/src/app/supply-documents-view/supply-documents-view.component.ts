@@ -14,7 +14,6 @@ import { FormsModule } from "@angular/forms";
 export class SupplyDocumentsViewComponent implements OnInit {
 
   supplyDocuments: SupplyDocument[] = [];
-  selectAll = false;
 
   constructor(
     private supplyDocumentService: SupplyDocumentService,
@@ -51,10 +50,6 @@ export class SupplyDocumentsViewComponent implements OnInit {
     });
   }
 
-
-  viewDocumentDetails(documentId: number): void {
-    this.router.navigate(['/supply-documents', documentId, 'details']);
-  }
 
   isAnyDocumentSelected(): boolean {
     return this.supplyDocuments.some(doc => doc.selected);

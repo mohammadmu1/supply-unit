@@ -25,17 +25,15 @@ public class SupplyDocumentDto {
 
     private String subject;
 
-
-
+    private String itemName;
+    private String warehouseName;
+    private String employeeName;
 
 
     private LocalDateTime createdDateTime;
 
 
-    private Warehouse warehouse;
 
-
-    private Item item;
 
     @PrePersist
     public void prePersist() {

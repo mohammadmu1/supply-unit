@@ -17,7 +17,9 @@
       <th>Supply Document Name</th>
       <th>Subject</th>
       <th>Created Date and Time</th>
+      <th>Status</th>
       <th>Select Document for Delete</th>
+
     </tr>
     </thead>
     <tbody>
@@ -25,9 +27,11 @@
       <td>{{ doc.name }}</td>
       <td>{{ doc.subject }}</td>
       <td>{{ doc.createdDateTime }}</td>
+      <td>{{ doc.status }}</td>
       <td>
         <input type="checkbox" [(ngModel)]="doc.selected" (change)="checkIfAnySelected()" />
       </td>
+
 
     </tr>
     </tbody>

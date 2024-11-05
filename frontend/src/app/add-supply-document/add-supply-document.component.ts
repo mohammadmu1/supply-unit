@@ -64,10 +64,8 @@ export class AddSupplyDocumentComponent implements OnInit {
   }
 
   addDoc(): void {
-    // Log the document data for debugging purposes
     console.log(this.newDocument);
 
-    // Destructure values from `newDocument` and pass them to `addSupplyDocument` method
     if (this.newDocument.name && this.newDocument.subject && this.newDocument.warehouseId && this.newDocument.itemId) {
       this.supplyDocumentService
         .addSupplyDocument(
@@ -79,7 +77,6 @@ export class AddSupplyDocumentComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('Document added successfully', response);
-            // Reset the form or perform any other success action
             this.newDocument = {};
           },
           error: (error) => {
@@ -90,4 +87,9 @@ export class AddSupplyDocumentComponent implements OnInit {
       console.error('Please fill out all required fields');
     }
   }
+
+  goBack() {
+    this.router.navigate(['//supplyDocument']);
+  }
+
 }

@@ -1,0 +1,32 @@
+<div class="supply-documents-container">
+  <h2>Supply Documents</h2>
+  <button class="back-button" (click)="back()">Back</button>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Supply Document Name</th>
+      <th>Subject</th>
+      <th>Warehouse Name</th>
+      <th>Item Name</th>
+      <th>Employee Name</th>
+      <th>Created Date and Time</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let doc of supplyDocuments">
+      <td>{{ doc.name }}</td>
+      <td>{{ doc.subject }}</td>
+      <td>{{ doc.warehouseName }}</td>
+      <td>{{ doc.itemName }}</td>
+      <td>{{ doc.employeeName }}</td>
+      <td>{{ doc.createdDateTime }}</td>
+      <td>
+        <button class="green-button" (click)="approveDocument(doc)">Approve</button>
+        <button class="red-button" (click)="declineDocument(doc)">Decline</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
