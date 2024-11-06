@@ -3,7 +3,6 @@ package com.globitel.SupplyUnit.controller;
 import com.globitel.SupplyUnit.model.entity.Item;
 import com.globitel.SupplyUnit.model.entity.Warehouse;
 import com.globitel.SupplyUnit.repository.WarehouseRepository;
-import com.globitel.SupplyUnit.service.JwtService;
 import com.globitel.SupplyUnit.service.WarehouseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

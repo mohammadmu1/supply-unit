@@ -1,7 +1,5 @@
 package com.globitel.SupplyUnit.model.dto;
 
-import com.globitel.SupplyUnit.model.entity.Item;
-import com.globitel.SupplyUnit.model.entity.Warehouse;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

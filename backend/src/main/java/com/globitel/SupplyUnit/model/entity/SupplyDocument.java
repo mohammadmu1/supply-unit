@@ -1,12 +1,12 @@
 package com.globitel.SupplyUnit.model.entity;
 
 import com.globitel.SupplyUnit.constant.DocumentStatus;
-import com.globitel.SupplyUnit.constant.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data

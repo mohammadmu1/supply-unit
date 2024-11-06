@@ -4,21 +4,13 @@ import com.globitel.SupplyUnit.constant.DocumentStatus;
 import com.globitel.SupplyUnit.model.dto.SupplyDocumentDto;
 import com.globitel.SupplyUnit.model.entity.SupplyDocument;
 import com.globitel.SupplyUnit.model.entity.User;
-import com.globitel.SupplyUnit.repository.ItemRepository;
 import com.globitel.SupplyUnit.repository.SupplyDocumentRepository;
 import com.globitel.SupplyUnit.repository.UserRepository;
-import com.globitel.SupplyUnit.repository.WarehouseRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -28,9 +20,7 @@ public class SupplyDocumentService {
 
     private final SupplyDocumentRepository getSupplyDocumentRepository;
     private final UserRepository userRepository;
-    private final ItemRepository itemRepository;
     private final SupplyDocumentRepository supplyDocumentRepository;
-    private final WarehouseRepository warehouseRepository;
 
     private final JwtService jwtService;
 

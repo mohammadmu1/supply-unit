@@ -1,7 +1,5 @@
 package com.globitel.SupplyUnit.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.globitel.SupplyUnit.model.entity.Item;
 import com.globitel.SupplyUnit.model.entity.User;
 import com.globitel.SupplyUnit.model.entity.Warehouse;
@@ -13,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
