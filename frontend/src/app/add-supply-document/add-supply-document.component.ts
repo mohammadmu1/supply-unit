@@ -40,7 +40,7 @@ export class AddSupplyDocumentComponent implements OnInit {
     this.loadWarehouses();
   }
 
-  loadWarehouses(): void {
+  loadWarehouses(): void {  //client side filters
     this.warehouseService.getAllWarehousesWithItems().subscribe({
       next: (warehouses) => {
         this.warehouses = warehouses.filter(warehouse => warehouse.items && warehouse.items.length > 0);

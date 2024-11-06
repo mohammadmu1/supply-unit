@@ -28,7 +28,7 @@ public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
 
 
-
+    @Transactional
     public List<Warehouse> getWarehousesByUsername(String authorizationHeader) {
         String username= jwtService.getUserName(authorizationHeader);
         return warehouseRepository.findWarehousesByUsername(username);
@@ -66,8 +66,8 @@ public class WarehouseService {
     public List<Item> getItemsByWarehouseName(String warehouseName) {
         return warehouseRepository.findItemsByWarehouseName(warehouseName);
     }
-
-    public List<Warehouse> getAllWarehousesWithItems() {
+    @Transactional
+    public List<Warehouse> getAllWarehousesWithItems() { // filters in frontend
         return warehouseRepository.getAllWarehousesWithItems();
     }
 

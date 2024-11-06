@@ -15,16 +15,17 @@ import java.util.List;
 @Repository
 public interface SupplyDocumentRepository extends JpaRepository <SupplyDocument, Long> {
 
-    @Query(value = "CALL GetSupplyDocumentsByUsername(:username)", nativeQuery = true)
+
+    @Procedure(procedureName = "GetSupplyDocumentsByUsername")
     List<SupplyDocument> findSupplyDocumentByUsername(@Param("username") String username);
 
     @Modifying
     @Transactional
-    @Query(value = "CALL delete_supply_documents(:docIds)", nativeQuery = true)
+    @Procedure(procedureName = "delete_supply_documents")
     void deleteSelectedSupplyDocuments(@Param("docIds") String docIds);
 
 
-    @Procedure(name = "createSupplyDocument")
+    @Procedure(procedureName = "createSupplyDocument")
     void createSupplyDocument(
             @Param("p_createdBy") String createdBy,
             @Param("p_warehouseId") Long warehouseId,
@@ -32,10 +33,11 @@ public interface SupplyDocumentRepository extends JpaRepository <SupplyDocument,
             @Param("p_name") String name,
             @Param("p_subject") String subject
     );
-    @Procedure(name = "UpdateDocumentStatus")
+    @Procedure(procedureName = "UpdateDocumentStatus")
     void updateDocumentStatus(Long docId, String newStatus);
 
-    @Query(value = "CALL GetSupplyDocumentsByManagerUsername(:managerUsername)", nativeQuery = true)
+    @Transactional
+    @Procedure(procedureName = "GetSupplyDocumentsByManagerUsername")
     List<SupplyDocument> findSupplyDocumentsByManagerUsername(@Param("managerUsername") String managerUsername);
 
 }
