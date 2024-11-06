@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import * as XLSX from 'xlsx'; // Import the xlsx library
 import { Router } from '@angular/router';
 import { Warehouse, WarehouseService } from "../service/warehouse-service.service";
@@ -7,7 +7,7 @@ import { Warehouse, WarehouseService } from "../service/warehouse-service.servic
 @Component({
   selector: 'app-warehouse-view',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './warehouse-view.component.html',
   styleUrls: ['./warehouse-view.component.css']
 })
