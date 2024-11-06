@@ -36,7 +36,7 @@ public class SupplyDocumentService {
 
 
 
-
+    @Transactional
     public List<SupplyDocument> getSupplyDocumentsByUsername(String authorizationHeader) {
 
         String username = jwtService.getUserName(authorizationHeader);
@@ -80,7 +80,7 @@ public class SupplyDocumentService {
         }
     }
 
-
+    @Transactional
     public List<SupplyDocumentDto> findSupplyDocumentsByManagerUsername(String authorizationHeader) {
         String managerName = jwtService.getUserName(authorizationHeader);
 
