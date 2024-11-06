@@ -13,8 +13,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
-    @Query(value = "CALL GetWarehousesByUsername(:username)", nativeQuery = true)
+    @Transactional
+    @Procedure(procedureName = "GetWarehousesByUsername")
     List<Warehouse> findWarehousesByUsername(@Param("username") String username);
+
+
 
     @Procedure(procedureName = "deleteWarehouseAndItems")
     void deleteWarehouseByName(String name);
@@ -23,8 +26,8 @@ public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
     List<Item> findItemsByWarehouseName(@Param("warehouseName") String warehouseName);
 
 
-    @Transactional
-    @Query(value = "CALL getAllWarehousesWithItems()", nativeQuery = true)
+
+    @Procedure(procedureName = "getAllWarehousesWithItems")
     List<Warehouse> getAllWarehousesWithItems();
 
 
