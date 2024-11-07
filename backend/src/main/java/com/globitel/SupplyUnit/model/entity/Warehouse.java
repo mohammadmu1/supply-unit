@@ -35,7 +35,7 @@ public class Warehouse {
     @Column(nullable = false)
     private LocalDateTime createdDateTime;
 
-    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
     private List<Item> items;
 
     @PrePersist
