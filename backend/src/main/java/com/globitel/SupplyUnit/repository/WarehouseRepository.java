@@ -17,7 +17,7 @@ public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 
 
     @Procedure(procedureName = "deleteWarehouseAndItems")
-    void deleteWarehouseByName(String name);
+    void deleteWarehouseByName(@Param("name")String warehouseName);
 
     @Procedure(procedureName = "GetItemsByWarehouseName")
     List<Item> findItemsByWarehouseName(@Param("warehouseName") String warehouseName);
