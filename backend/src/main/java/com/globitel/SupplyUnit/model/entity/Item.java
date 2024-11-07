@@ -29,7 +29,7 @@ public class Item {
     private int quantity;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "warehouse_id", nullable = false)
     private Warehouse warehouse;
 
