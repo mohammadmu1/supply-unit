@@ -17,6 +17,8 @@
       <th>Supply Document Name</th>
       <th>Subject</th>
       <th>Created Date and Time</th>
+      <td>Warehouse Name</td>
+      <td>Item Name </td>
       <th>Status</th>
       <th>Select Document for Delete</th>
 
@@ -27,12 +29,12 @@
       <td>{{ doc.name }}</td>
       <td>{{ doc.subject }}</td>
       <td>{{ doc.createdDateTime }}</td>
+      <td>{{ doc.warehouseName }}</td>
+      <td>{{ doc.itemName }}</td>
       <td>{{ doc.status }}</td>
       <td>
         <input type="checkbox" [(ngModel)]="doc.selected" (change)="checkIfAnySelected()" />
       </td>
-
-
     </tr>
     </tbody>
   </table>

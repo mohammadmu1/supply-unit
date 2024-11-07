@@ -89,7 +89,7 @@ export class AddSupplyDocumentComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['//supplyDocument']);
+    this.router.navigate(['/supplyDocument']);
   }
 
 }

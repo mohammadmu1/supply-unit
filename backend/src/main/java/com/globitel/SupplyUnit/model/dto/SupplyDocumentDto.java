@@ -1,13 +1,13 @@
 package com.globitel.SupplyUnit.model.dto;
 
-import com.globitel.SupplyUnit.model.entity.Item;
-import com.globitel.SupplyUnit.model.entity.Warehouse;
+import com.globitel.SupplyUnit.constant.DocumentStatus;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.swing.text.Document;
 import java.time.LocalDateTime;
 
 @Data
@@ -33,7 +33,7 @@ public class SupplyDocumentDto {
     private LocalDateTime createdDateTime;
 
 
-
+    private DocumentStatus status;
 
     @PrePersist
     public void prePersist() {

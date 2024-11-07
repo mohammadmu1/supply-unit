@@ -4,12 +4,9 @@ import com.globitel.SupplyUnit.model.entity.Item;
 import com.globitel.SupplyUnit.model.entity.Warehouse;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
@@ -20,7 +17,7 @@ public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 
 
     @Procedure(procedureName = "deleteWarehouseAndItems")
-    void deleteWarehouseByName(String name);
+    void deleteWarehouseByName(@Param("name")String warehouseName);
 
     @Procedure(procedureName = "GetItemsByWarehouseName")
     List<Item> findItemsByWarehouseName(@Param("warehouseName") String warehouseName);
