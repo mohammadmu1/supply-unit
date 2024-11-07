@@ -22,6 +22,7 @@ export class SupplyDocumentsViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSupplyDocuments();
+    console.log(this.supplyDocuments)
   }
 
   loadSupplyDocuments(): void {
@@ -42,7 +43,7 @@ export class SupplyDocumentsViewComponent implements OnInit {
     this.supplyDocumentService.deleteSelectedSupplyDocuments(selectedDocIds).subscribe({
       next: () => {
         console.log('Documents deleted successfully');
-        this.loadSupplyDocuments(); // Refresh the list
+        this.supplyDocuments = this.supplyDocuments.filter(doc => !selectedDocIds.includes(doc.id));
       },
       error: (error) => {
         console.error('Error deleting documents:', error);

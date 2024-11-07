@@ -21,8 +21,8 @@ public class SupplyDocumentController {
 
     // Endpoint to get supply documents by username
     @GetMapping("")
-    public ResponseEntity<List<SupplyDocument>> getSupplyDocumentByUsername(@RequestHeader("Authorization") String authorizationHeader) {
-        List<SupplyDocument> supplyDocuments = supplyDocumentService.getSupplyDocumentsByUsername(authorizationHeader);
+    public ResponseEntity<List<SupplyDocumentDto>> getSupplyDocumentByUsername(@RequestHeader("Authorization") String authorizationHeader) {
+        List<SupplyDocumentDto> supplyDocuments = supplyDocumentService.getSupplyDocumentsByUsername(authorizationHeader);
         return ResponseEntity.ok(supplyDocuments);
     }
 

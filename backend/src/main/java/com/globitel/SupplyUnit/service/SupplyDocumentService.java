@@ -31,7 +31,7 @@ public class SupplyDocumentService {
 
     // Method to get supply documents associated with a specific username
     @Transactional
-    public List<SupplyDocument> getSupplyDocumentsByUsername(String authorizationHeader) {
+    public List<SupplyDocumentDto> getSupplyDocumentsByUsername(String authorizationHeader) {
         // Extract username from the JWT token
         String username = jwtService.getUserName(authorizationHeader);
 
@@ -39,14 +39,27 @@ public class SupplyDocumentService {
         User employee = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
 
-        try {
+
             // Retrieve and return supply documents linked to the username
-            return getSupplyDocumentRepository.findSupplyDocumentByUsername(username);
-        } catch (Exception e) {
-            System.err.println("Error occurred while creating SupplyDocument: " + e.getMessage());
-            e.printStackTrace();
-            throw new RuntimeException("Failed to create SupplyDocument due to an error", e);
-        }
+            List<SupplyDocument> docs= getSupplyDocumentRepository.findSupplyDocumentByUsername(username);
+
+        List<SupplyDocumentDto> dtoList = docs.stream()
+                .map(doc -> SupplyDocumentDto.builder()
+                        .name(doc.getName())
+                        .subject(doc.getSubject())
+                        .id(doc.getId())
+                        .createdDateTime(doc.getCreatedDateTime())
+                        .itemName(doc.getItem().getName())
+                        .warehouseName(doc.getWarehouse().getName())
+                        .employeeName(doc.getCreatedBy().getFullName())
+                        .status(doc.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+
+        return dtoList;
+
+
+
     }
 
     // Method to delete selected supply documents by their IDs
