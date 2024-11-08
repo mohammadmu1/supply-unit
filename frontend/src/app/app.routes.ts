@@ -7,10 +7,7 @@ import {AuthGuard} from "./service/auth-guard.service";
 import {WarehouseItemsComponent} from "./warehouse-items/warehouse-items.component";
 import {SupplyDocumentsViewComponent} from "./supply-documents-view/supply-documents-view.component";
 import {AddSupplyDocumentComponent} from "./add-supply-document/add-supply-document.component";
-import {
-  ManagerSupplyDocumentsViewComponent
-} from "./manager-supply-documents-view/manager-supply-documents-view.component";
-import {NotFoundComponentComponent} from "./not-found-component/not-found-component.component";
+import {ManagerSupplyDocumentsViewComponent} from "./manager-supply-documents-view/manager-supply-documents-view.component";
 
 
 
@@ -37,6 +34,6 @@ export const routes: Routes = [
   // http://localhost:4200/supplyDocument
   {path: 'supplyDocument/manager', component: ManagerSupplyDocumentsViewComponent, canActivate: [AuthGuard], data: { role: 'MANAGER' }},
 
-  { path: '**', component: NotFoundComponentComponent }
+  // { path: '**', component: NotFoundComponentComponent }
 
 ];
