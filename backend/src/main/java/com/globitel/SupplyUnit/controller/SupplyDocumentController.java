@@ -6,13 +6,15 @@ import com.globitel.SupplyUnit.model.entity.SupplyDocument;
 import com.globitel.SupplyUnit.service.SupplyDocumentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
-@RestController
+@Component
+@ResponseBody
 @CrossOrigin({"http://127.0.0.1:4200", "http://localhost:4200"})
 @RequestMapping("/api/v1/supplyDocument")
 public class SupplyDocumentController {
@@ -29,6 +31,8 @@ public class SupplyDocumentController {
     // Endpoint to delete multiple selected supply documents by their IDs
     @PostMapping("/deleteSelected")
     public ResponseEntity<Void> deleteSelectedSupplyDocuments(@RequestBody List<Long> ids) {
+        System.out.println('f');
+
         supplyDocumentService.deleteSelectedSupplyDocuments(ids);
         return ResponseEntity.noContent().build();  // Return 204 No Content
     }

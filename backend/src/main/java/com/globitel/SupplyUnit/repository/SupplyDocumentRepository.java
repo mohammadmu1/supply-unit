@@ -1,9 +1,7 @@
 package com.globitel.SupplyUnit.repository;
 
 import com.globitel.SupplyUnit.model.entity.SupplyDocument;
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -17,8 +15,7 @@ public interface SupplyDocumentRepository extends JpaRepository<SupplyDocument, 
     @Procedure(procedureName = "GetSupplyDocumentsByUsername")
     List<SupplyDocument> findSupplyDocumentByUsername(@Param("username") String username);
 
-    @Modifying
-    @Transactional
+
     @Procedure(procedureName = "delete_supply_documents")
     void deleteSelectedSupplyDocuments(@Param("docIds") String docIds);
 
@@ -35,11 +32,10 @@ public interface SupplyDocumentRepository extends JpaRepository<SupplyDocument, 
     @Procedure(procedureName = "UpdateDocumentStatus")
     void updateDocumentStatus(Long docId, String newStatus);
 
-    @Transactional
+
     @Procedure(procedureName = "GetSupplyDocumentsByManagerUsername")
     List<SupplyDocument> findSupplyDocumentsByManagerUsername(@Param("managerUsername") String managerUsername);
 
 }
-
 
 

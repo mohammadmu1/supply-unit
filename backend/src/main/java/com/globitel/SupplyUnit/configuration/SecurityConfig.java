@@ -49,7 +49,6 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/auth/addUser").hasAuthority(String.valueOf(Role.ADMIN))
                                 .requestMatchers("/api/v1/supplyDocument/manager").hasAuthority(String.valueOf(Role.MANAGER))
                                 .requestMatchers("/api/v1/supplyDocument/updateStatus").hasAuthority(String.valueOf(Role.MANAGER))
-
                                 .requestMatchers("/api/v1/supplyDocument/**").hasAuthority(String.valueOf(Role.EMPLOYEE))
                                 .requestMatchers("/api/v1/warehouses").hasAuthority(String.valueOf(Role.MANAGER))
                                 .anyRequest().permitAll())
