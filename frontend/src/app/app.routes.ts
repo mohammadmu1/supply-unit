@@ -10,6 +10,7 @@ import {AddSupplyDocumentComponent} from "./add-supply-document/add-supply-docum
 import {
   ManagerSupplyDocumentsViewComponent
 } from "./manager-supply-documents-view/manager-supply-documents-view.component";
+import {NotFoundComponentComponent} from "./not-found-component/not-found-component.component";
 
 
 
@@ -36,5 +37,6 @@ export const routes: Routes = [
   // http://localhost:4200/supplyDocument
   {path: 'supplyDocument/manager', component: ManagerSupplyDocumentsViewComponent, canActivate: [AuthGuard], data: { role: 'MANAGER' }},
 
+  { path: '**', component: NotFoundComponentComponent }
 
 ];
