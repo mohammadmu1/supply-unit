@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
-@Component
-@ResponseBody
+@RestController
 @CrossOrigin({"http://127.0.0.1:4200", "http://localhost:4200"})
 @RequestMapping("/api/v1/supplyDocument")
 public class SupplyDocumentController {
