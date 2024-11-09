@@ -37,13 +37,7 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<Warehouse[]>(`${this.baseUrl}`, {headers}).pipe(
-      map((response) => {
-        this.warehouses = response;
-        console.log("Service response:", this.warehouses);
-        return response;
-      })
-    );
+    return this.http.get<Warehouse[]>(`${this.baseUrl}`, {headers})
   }
 
   getAllWarehousesWithItems(): Observable<Warehouse[]> {
@@ -53,13 +47,8 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<Warehouse[]>(`${this.baseUrl}/all`, {headers}).pipe(
-      map((response) => {
-        this.warehouses = response;
-        console.log("Service response:", this.warehouses);
-        return response;
-      })
-    );
+    return this.http.get<Warehouse[]>(`${this.baseUrl}/all`, {headers})
+
   }
 
   addWarehouse(name: string, description: string, items: Item[]): Observable<Warehouse> {
@@ -73,9 +62,7 @@ export class WarehouseService {
       `${this.baseUrl}`,
       {name, description, items},
       {headers}
-    ).pipe(
-      map((response) => response)
-    );
+    )
   }
 
   deleteWarehouse(name: string): Observable<any> {
@@ -85,9 +72,7 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.delete<any>(`${this.baseUrl}/${name}`, {headers}).pipe(
-      map((response) => response)
-    );
+    return this.http.delete<any>(`${this.baseUrl}/${name}`, {headers})
   }
 
   getWarehouseItems(warehouseName: string): Observable<Item[]> {
@@ -97,9 +82,7 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<Item[]>(`${this.baseUrl}/items`, { warehouseName }, { headers }).pipe(
-      map((response) => response)
-    );
+    return this.http.post<Item[]>(`${this.baseUrl}/items`, { warehouseName }, { headers })
   }
 
 
