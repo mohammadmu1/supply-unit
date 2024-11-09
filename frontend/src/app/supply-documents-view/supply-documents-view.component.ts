@@ -40,15 +40,15 @@ export class SupplyDocumentsViewComponent implements OnInit {
       .filter(doc => doc.selected)
       .map(doc => doc.id);
 
-    this.supplyDocumentService.deleteSelectedSupplyDocuments(selectedDocIds).subscribe({
-      next: () => {
+    this.supplyDocumentService.deleteSelectedSupplyDocuments(selectedDocIds).subscribe(
+      () => {
         console.log('Documents deleted successfully');
         this.supplyDocuments = this.supplyDocuments.filter(doc => !selectedDocIds.includes(doc.id));
       },
-      error: (error) => {
+      (error) => {
         console.error('Error deleting documents:', error);
       }
-    });
+    );
   }
 
 

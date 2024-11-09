@@ -43,22 +43,19 @@ export class SignupComponent {
       this.signUpRequest.password,
       this.signUpRequest.name,
       this.signUpRequest.role
-    ).subscribe({
-      next: (response) => {
+    ).subscribe(
+       (response) => {
         console.log('User added successfully:', response);
         this.successMessage = 'User added successfully';
         this.errorMessage = '';
       },
-      error: (error) => {
+       (error) => {
         console.log('Error adding user:', error);
         this.errorMessage = 'Unable to add user due to insufficient permissions';
         this.successMessage = '';
       }
-    });
+    );
   }
 
-  logout():void{
-    this.authService.clearToken();
-    window.location.reload();
-  }
+
 }

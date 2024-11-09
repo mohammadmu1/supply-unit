@@ -41,14 +41,14 @@ export class AddSupplyDocumentComponent implements OnInit {
   }
 
   loadWarehouses(): void {  //client side filters
-    this.warehouseService.getAllWarehousesWithItems().subscribe({
-      next: (warehouses) => {
+    this.warehouseService.getAllWarehousesWithItems().subscribe(
+      (warehouses) => {
         this.warehouses = warehouses.filter(warehouse => warehouse.items && warehouse.items.length > 0);
       },
-      error: (error) => {
+       (error) => {
         console.error('Error loading warehouses:', error);
       }
-    });
+    );
   }
 
   onWarehouseChange(): void {
@@ -74,15 +74,15 @@ export class AddSupplyDocumentComponent implements OnInit {
           this.newDocument.warehouseId,
           this.newDocument.itemId
         )
-        .subscribe({
-          next: (response) => {
+        .subscribe(
+           (response) => {
             console.log('Document added successfully', response);
             this.newDocument = {};
           },
-          error: (error) => {
+           (error) => {
             console.error('Error adding document', error);
           }
-        });
+        );
     } else {
       console.error('Please fill out all required fields');
     }

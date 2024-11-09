@@ -46,8 +46,8 @@ export class LoginComponent {
 
 
     this.authService.executeAuthentication(this.username, this.password)
-      .subscribe({
-        next: (response) => {
+      .subscribe(
+         (response) => {
           const token = response.token;
           const role = response.role;
 
@@ -68,7 +68,7 @@ export class LoginComponent {
             }
           }
         },
-        error: (err) => {
+         (err) => {
           this.errorMessage = 'Wrong username or password';
           this.username = '';
           this.password = '';
@@ -77,10 +77,10 @@ export class LoginComponent {
             this.errorMessage = '';
           }, 1750);
         },
-        complete: () => {
+         () => {
           console.log('Authentication process completed');
         }
-      });
+      );
   }
 
 

@@ -49,16 +49,16 @@ export class ManagerSupplyDocumentsViewComponent implements OnInit {
       status: 'Approved'
     };
 
-    this.supplyDocumentService.updateDocumentStatus(updatePayload).subscribe({
-      next: () => {
+    this.supplyDocumentService.updateDocumentStatus(updatePayload).subscribe(
+       () => {
         console.log('Document approved successfully.');
         // Remove the document from the array after approval
         this.supplyDocuments = this.supplyDocuments.filter(d => d.id !== doc.id);
       },
-      error: (error) => {
+       (error) => {
         console.error('Error approving document:', error);
       }
-    });
+    );
   }
 
   declineDocument(doc: any) {
@@ -67,16 +67,16 @@ export class ManagerSupplyDocumentsViewComponent implements OnInit {
       status: 'Decline'
     };
 
-    this.supplyDocumentService.updateDocumentStatus(updatePayload).subscribe({
-      next: () => {
+    this.supplyDocumentService.updateDocumentStatus(updatePayload).subscribe(
+       () => {
         console.log('Document declined successfully.');
         // Remove the document from the array after decline
         this.supplyDocuments = this.supplyDocuments.filter(d => d.id !== doc.id);
       },
-      error: (error) => {
+       (error) => {
         console.error('Error declining document:', error);
       }
-    });
+    );
   }
 
 }

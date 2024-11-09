@@ -34,9 +34,7 @@ export class SupplyDocumentService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<SupplyDocument[]>(`${this.baseUrl}`, { headers }).pipe(
-      map((response) => response)
-    );
+    return this.http.get<SupplyDocument[]>(`${this.baseUrl}`, { headers })
   }
 
   addSupplyDocument(name: string, subject: string,  warehouseId: number, itemId: number): Observable<SupplyDocument> {
@@ -72,9 +70,7 @@ export class SupplyDocumentService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<SupplyDocument[]>(`${this.baseUrl}/manager`, { headers }).pipe(
-      map((response) => response)
-    );
+    return this.http.get<SupplyDocument[]>(`${this.baseUrl}/manager`, { headers })
   }
 
   updateDocumentStatus(updatePayload: { id: number, status: string }): Observable<void> {

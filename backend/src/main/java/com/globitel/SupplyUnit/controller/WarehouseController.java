@@ -57,7 +57,7 @@ public class WarehouseController {
         return ResponseEntity.noContent().build();
     }
 
-    // Endpoint to get items by warehouse name (SP usage is noted as a TODO)
+    // Endpoint to get items by warehouse name
     @PostMapping("/items")
     public ResponseEntity<List<Item>> getItemsByWarehouseName(@RequestBody Map<String, String> request) {
         // Retrieve warehouse name from the request body
