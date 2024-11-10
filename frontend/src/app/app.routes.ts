@@ -8,6 +8,7 @@ import {WarehouseItemsComponent} from "./warehouse-items/warehouse-items.compone
 import {SupplyDocumentsViewComponent} from "./supply-documents-view/supply-documents-view.component";
 import {AddSupplyDocumentComponent} from "./add-supply-document/add-supply-document.component";
 import {ManagerSupplyDocumentsViewComponent} from "./manager-supply-documents-view/manager-supply-documents-view.component";
+import {LoginGuard} from "./service/login-guard.service";
 
 
 
@@ -16,7 +17,7 @@ import {ManagerSupplyDocumentsViewComponent} from "./manager-supply-documents-vi
 
 export const routes: Routes = [
   // http://localhost:4200/login
-  {path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   // http://localhost:4200
   {path: '', component: LoginComponent},
   // http://localhost:4200/addUser
@@ -34,6 +35,6 @@ export const routes: Routes = [
   // http://localhost:4200/supplyDocument
   {path: 'supplyDocument/manager', component: ManagerSupplyDocumentsViewComponent, canActivate: [AuthGuard], data: { role: 'MANAGER' }},
 
-  // { path: '**', component: NotFoundComponentComponent }
+  // { path: '**', component: SignupComponent, canActivate: [AuthGuard], data: { role: 'ADMIN' }}
 
 ];

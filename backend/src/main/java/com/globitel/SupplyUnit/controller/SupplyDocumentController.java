@@ -2,11 +2,9 @@ package com.globitel.SupplyUnit.controller;
 
 import com.globitel.SupplyUnit.constant.DocumentStatus;
 import com.globitel.SupplyUnit.model.dto.SupplyDocumentDto;
-import com.globitel.SupplyUnit.model.entity.SupplyDocument;
 import com.globitel.SupplyUnit.service.SupplyDocumentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +28,6 @@ public class SupplyDocumentController {
     // Endpoint to delete multiple selected supply documents by their IDs
     @PostMapping("/deleteSelected")
     public ResponseEntity<Void> deleteSelectedSupplyDocuments(@RequestBody List<Long> ids) {
-        System.out.println('f');
 
         supplyDocumentService.deleteSelectedSupplyDocuments(ids);
         return ResponseEntity.noContent().build();  // Return 204 No Content

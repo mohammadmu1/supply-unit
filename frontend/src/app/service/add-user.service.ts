@@ -22,11 +22,6 @@ export class AddUserService {
       `${this.baseUrl}addUser`,
       { userName, password, name, role },
       { headers }
-    ).pipe(
-      map((response) => {
-
-        return response;
-      })
-    );
+    )
   }
 }
