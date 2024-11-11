@@ -6,33 +6,36 @@
   <form #addForm="ngForm">
     <label>
       Document Name:
-      <input type="text" [(ngModel)]="newDocument.name" name="name" required />
+      <input type="text" [(ngModel)]="newDocument.name" name="name" required/>
     </label>
 
     <label>
       Subject:
-      <input type="text" [(ngModel)]="newDocument.subject" name="subject" required />
+      <input type="text" [(ngModel)]="newDocument.subject" name="subject" required/>
     </label>
 
     <label>
       Select Warehouse:
       <select [(ngModel)]="selectedWarehouse" name="warehouse" (change)="onWarehouseChange()" required>
         <option *ngFor="let warehouse of warehouses" [ngValue]="warehouse">
+          <!-- send selected warehouse with it is items-->
           {{ warehouse.name }}
         </option>
       </select>
     </label>
 
+    <!--    when the use select warehouse by all it is items will move to this dropdown list by  (change)="onWarehouseChange()"-->
     <label>
       Select Item:
       <select [(ngModel)]="selectedItemId" name="item" (change)="onItemChange()" [disabled]="!items.length" required>
-        <option *ngFor="let item of items" [value]="item.id">
+        <option *ngFor="let item of items" [ngValue]="item.id">
           {{ item.name }}
         </option>
       </select>
     </label>
 
-    <button (click)="addDoc()" type="submit" class="green-button" [disabled]="addForm.invalid" [ngClass]="{'disabled-button': addForm.invalid}">
+    <button (click)="addDoc()" type="submit" class="green-button" [disabled]="addForm.invalid"
+            [ngClass]="{'disabled-button': addForm.invalid}">
       Add Document
     </button>
   </form>

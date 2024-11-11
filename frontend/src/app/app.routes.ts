@@ -19,7 +19,7 @@ export const routes: Routes = [
   // http://localhost:4200/login
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   // http://localhost:4200
-  {path: '', component: LoginComponent},
+  {path: '', component: LoginComponent, canActivate: [LoginGuard]},
   // http://localhost:4200/addUser
   { path: 'addUser', component: SignupComponent, canActivate: [AuthGuard], data: { role: 'ADMIN' } },
   // http://localhost:4200/warehouse
@@ -35,6 +35,6 @@ export const routes: Routes = [
   // http://localhost:4200/supplyDocument
   {path: 'supplyDocument/manager', component: ManagerSupplyDocumentsViewComponent, canActivate: [AuthGuard], data: { role: 'MANAGER' }},
 
-  // { path: '**', component: SignupComponent, canActivate: [AuthGuard], data: { role: 'ADMIN' }}
+  { path: '**', component: SignupComponent, canActivate: [AuthGuard], data: { role: 'NO AUTH' }}
 
 ];

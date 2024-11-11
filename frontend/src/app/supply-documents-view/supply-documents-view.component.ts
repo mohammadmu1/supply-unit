@@ -36,7 +36,7 @@ export class SupplyDocumentsViewComponent implements OnInit {
     this.router.navigate(['/supplyDocument/add']);
   }
   deleteSelectedDocuments(): void {
-    const selectedDocIds = this.supplyDocuments
+    const selectedDocIds:number[] = this.supplyDocuments
       .filter(doc => doc.selected)
       .map(doc => doc.id);
 
@@ -56,9 +56,7 @@ export class SupplyDocumentsViewComponent implements OnInit {
     return this.supplyDocuments.some(doc => doc.selected);
   }
 
-  checkIfAnySelected(): void {
-    this.isAnyDocumentSelected();
-  }
+
 
 
 }

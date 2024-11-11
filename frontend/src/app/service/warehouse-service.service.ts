@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 export interface Item {
   id: number;
@@ -82,7 +81,7 @@ export class WarehouseService {
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<Item[]>(`${this.baseUrl}/items`, { warehouseName }, { headers })
+    return this.http.post<Item[]>(`${this.baseUrl}/items`, {warehouseName}, {headers})
   }
 
 

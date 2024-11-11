@@ -40,7 +40,7 @@ export class AddSupplyDocumentComponent implements OnInit {
     this.loadWarehouses();
   }
 
-  loadWarehouses(): void {  //client side filters
+  loadWarehouses(): void {  //client side filters ( filter warehouses without items )
     this.warehouseService.getAllWarehousesWithItems().subscribe(
       (warehouses) => {
         this.warehouses = warehouses.filter(warehouse => warehouse.items && warehouse.items.length > 0);
@@ -53,7 +53,7 @@ export class AddSupplyDocumentComponent implements OnInit {
 
   onWarehouseChange(): void {
     if (this.selectedWarehouse) {
-      this.items = this.selectedWarehouse.items || [];
+      this.items = this.selectedWarehouse.items || []; // items if there is items with in warehouse or empty list
       this.selectedItemId = undefined;
       this.newDocument.warehouseId = this.selectedWarehouse.id;
     }
@@ -77,8 +77,8 @@ export class AddSupplyDocumentComponent implements OnInit {
         .subscribe(
            (response) => {
             console.log('Document added successfully', response);
-            this.newDocument = {};
-          },
+             window.location.reload();
+           },
            (error) => {
             console.error('Error adding document', error);
           }
@@ -91,5 +91,7 @@ export class AddSupplyDocumentComponent implements OnInit {
   goBack() {
     this.router.navigate(['/supplyDocument']);
   }
+
+
 
 }

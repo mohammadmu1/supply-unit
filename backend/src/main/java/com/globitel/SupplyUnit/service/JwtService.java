@@ -64,7 +64,7 @@ public class JwtService {
                 .setClaims(claims)  // Set the custom claims
                 .setSubject(userDetails.getUsername())  // Set the username as subject
                 .setIssuedAt(new Date(System.currentTimeMillis()))  // Set the issue date
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))  // Set expiration to 30 minutes
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 *30))  // Set expiration to 30 minutes
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)  // Sign with HMAC SHA-256
                 .compact();  // Generate and return the token as a string
     }
